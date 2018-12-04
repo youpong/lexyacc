@@ -1,4 +1,4 @@
-#include "lex.yy.h"
+#include "lex0.yy.h"
 #include <stdlib.h>
 
 int
