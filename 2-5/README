@@ -1,0 +1,15 @@
+<BUILD>
+$ make all check
+
+<DEPENDS ON>
+depends on: CUnit-2.1-3
+Ubuntu-16.04
+	# apt-get install libcunit1-dev
+
+<Case1>
+$ ./cl -f parse.y
+use file parse.y
+<Case2>
+$ ./cl -f -v
+use file -v
+"-v" はファイルとして捉えられる

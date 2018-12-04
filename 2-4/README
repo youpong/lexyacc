@@ -1,0 +1,16 @@
+--- caseA
+$ ./wc <lex.l
+      16       47      268
+--- caseB
+$ ./wc a
+could not open a
+--- caseC
+$ ./wc a a
+could not open a
+could not open a
+       0        0        0 total
+--- caseD
+$ ./wc lex.l a
+      16       47      268 lex.l
+could not open a
+      16       47      268 total

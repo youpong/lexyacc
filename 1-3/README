@@ -1,0 +1,5 @@
+<UseCase1>
+$ echo adjmy | ./word
+adjmy: don't recognize
+"adjmy" はパタン ^adj ではなく [a-zA-Z]+ にマッチする。lex では最も長く
+マッチするパタンが選択される。

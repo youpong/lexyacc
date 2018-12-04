@@ -1,0 +1,4 @@
+<build>
+$ make all
+<sample>
+$ ./word < sample.input

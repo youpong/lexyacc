@@ -1,0 +1,11 @@
+<BUILD>
+$ make all
+<TEST>
+$ make check
+<DEPENDS ON>
+depends on: CUnit-2.1-3
+Ubuntu-16.04
+	# apt-get install libcunit1-dev
+<UseCase1>
+$ ./cl -f parse.y
+use file parse.y

@@ -1,0 +1,7 @@
+<UseCase1>
+$ echo '-2/0' |./calc
+<expected>
+divide by zero
+<actually>
+divide by zero
+= -2

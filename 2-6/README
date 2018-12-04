@@ -1,0 +1,8 @@
+$ ./magic < sample.input 
+
+Magic:two
+three
+$ ./magic2 < sample.input 
+
+two
+three

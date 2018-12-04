@@ -1,0 +1,18 @@
+$ ./comment < sample
+<<< actual
+// c++ style: is comment
+/* c style */: is comment
+/* 1 */: is comment
+/* 2 */: is comment
+/* 3 */: is comment
+<<< expected
+// c++ style: is comment
+/* c style */: is comment
+/** c style 2  **/: is comment
+/* 1 */: is comment
+/* 2 */: is comment
+/* /* 3 */: is comment
+/*
+ * multi-line
+ */: is comment
+ 

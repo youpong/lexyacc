@@ -1,0 +1,7 @@
+<BUILD>
+$ make all
+<TEST>
+$ make check
+<test_yylex_000()>
+/* self-contained comment  */ のパターンが２つのコメントに一致してしまうこと
+がこのバグの原因
