@@ -3,12 +3,6 @@
 #include <string.h>
 #include "main.h"
 
-typedef struct word {
-  WORD_TYPE word_type;
-  char *word_name;
-  struct word *next;
-} WORD;
-
 static WORD *word_list = NULL;
 
 void
