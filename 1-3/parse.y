@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "lex.yy.h"
-int yyerror(char *);
+#include "main.h"
 %}
 
 %token NOUN PRONOUN VERB ADVERB ADJECTIVE PREPOSITION CONJUNCTION
@@ -20,23 +20,3 @@ subject:  NOUN
 object:	  NOUN
       ;
 %%
-extern FILE *yyin;
-
-int
-main(int argc, char* argv[])
-{
-	if(yyin == NULL) {
-		yyin = stdin;
-	}
-	while(!feof(yyin)) {
-		yyparse();
-	}
-	return EXIT_SUCCESS;
-}
-
-int
-yyerror(char *s)
-{
-	fprintf(stderr, "%s\n", s);
-	return 0;	
-}
