@@ -9,6 +9,8 @@ typedef enum {
      CONJ
 } WORD_TYPE;
 
+extern WORD_TYPE state;
+
 typedef struct word {
   WORD_TYPE word_type;
   char *word_name;

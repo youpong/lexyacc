@@ -5,7 +5,7 @@ LIBS = -ll
 LEX = lex
 
 TARGET = word
-OBJS = lex.yy.o lib.o
+OBJS = lex.yy.o lib.o main.o
 
 all: $(TARGET)
 
@@ -18,7 +18,7 @@ $(TARGET): $(OBJS)
 $(OBJS): main.h lex.yy.h
 
 lex.yy.h lex.yy.c: ch1-04.l
-	$(LEX) ch1-04.l
+	$(LEX) --header-file=lex.yy.h ch1-04.l
 
 .c.o:
 	$(CC) -c $< $(CFLAGS)

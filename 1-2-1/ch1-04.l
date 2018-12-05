@@ -5,7 +5,6 @@
 #include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
-WORD_TYPE state;
 %}
 
 %option nounput noinput
@@ -40,11 +39,3 @@ WORD_TYPE state;
   	  }
 .	  /* ignore anything else */	  
 %%
-
-int
-main(int argc, char* argv[])
-{
-	yylex();
-
-	return EXIT_SUCCESS;
-}
