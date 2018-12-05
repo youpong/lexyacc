@@ -2,25 +2,31 @@ CC = gcc
 CFLAGS = -Wall -g
 LEX = lex
 
-TARGET = echo0 echo1 echo2
+TARGET = echo
 LIBS = -ll
 
-all: $(TARGET)
+all: echo0 echo1 echo2
+
+echo0: ch1-01.l
+	cp ch1-01.l lex.l
+	make echo
+	mv echo echo0
+echo1: lex1.l
+	cp lex1.l lex.l
+	make echo
+	mv echo echo1
+echo2: lex2.l
+	cp lex2.l lex.l
+	make echo
+	mv echo echo2
+
 check: $(TARGET)
 	sh test.sh
 clean:
-	- rm -f lex[012].yy.c lex[012].yy.o echo[012]
+	- rm -f lex.yy.c lex.yy.o echo[012] lex.l
 
-echo0: lex0.yy.o
-	$(CC) $(CFLAGS) -o $@ $< $(LIBS)
-echo1: lex1.yy.o
-	$(CC) $(CFLAGS) -o $@ $< $(LIBS)
-echo2: lex2.yy.o
+echo: lex.yy.o
 	$(CC) $(CFLAGS) -o $@ $< $(LIBS)
 
-lex0.yy.c : lex0.l
-	$(LEX) -o $@ $<
-lex1.yy.c : lex1.l
-	$(LEX) -o $@ $<
-lex2.yy.c : lex2.l
+lex.yy.c : lex.l
 	$(LEX) -o $@ $<
