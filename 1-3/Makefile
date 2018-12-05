@@ -10,19 +10,19 @@ OBJS = y.tab.o lex.yy.o main.o lib.o
 
 all: $(TARGET)
 clean:
-	- rm -f y.tab.c y.tab.h lex.yy.c $(OBJS) $(TARGET)
+	- rm -f y.tab.[ch] lex.yy.[ch] $(OBJS) $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LIBS)
 
-y.tab.o: lex.yy.h
-lex.yy.o: y.tab.h
-lex.yy.o main.o lib.o: main.h
+main.o y.tab.o: lex.yy.h
+main.o lex.yy.o: y.tab.h
+$(OBJS): main.h
 
 lex.yy.h lex.yy.c : ch1-05.l
 	$(LEX) --header-file=lex.yy.h ch1-05.l
-y.tab.h y.tab.c: parse.y
-	$(YACC) -d parse.y
+y.tab.h y.tab.c: ch1-05.y
+	$(YACC) -d ch1-05.y
 
 .c.o:
 	$(CC) -c $< $(CFLAGS)
