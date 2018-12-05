@@ -12,6 +12,15 @@ all: $(TARGET)
 clean:
 	- rm -f y.tab.[ch] lex.yy.[ch] $(OBJS) $(TARGET)
 
+word0:
+	cp ch1-05.y parse.y
+	make word
+	mv word word0
+word1:
+	cp ch1-06.y parse.y
+	make word
+	mv word word1
+
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LIBS)
 
@@ -21,8 +30,8 @@ $(OBJS): main.h
 
 lex.yy.h lex.yy.c : ch1-05.l
 	$(LEX) --header-file=lex.yy.h ch1-05.l
-y.tab.h y.tab.c: ch1-05.y
-	$(YACC) -d ch1-05.y
+y.tab.h y.tab.c: parse.y
+	$(YACC) -d parse.y
 
 .c.o:
 	$(CC) -c $< $(CFLAGS)
