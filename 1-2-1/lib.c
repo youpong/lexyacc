@@ -19,8 +19,7 @@ void add_word(WORD_TYPE type, char *word) {
   wp->next = word_list;
 
   /* have to copy the word itself as well */
-  wp->word_name = (char *)malloc(strlen(word) + 1);
-  strcpy(wp->word_name, word);
+  wp->word_name = strdup(word);
   wp->word_type = type;
   word_list = wp;
 }
@@ -29,8 +28,7 @@ void add_word(WORD_TYPE type, char *word) {
  * LOOKUP: not found
  * else: word_type
  */
-WORD_TYPE
-lookup_word(char *word) {
+WORD_TYPE lookup_word(char *word) {
   /* search down the list looking for the word */
   for (WORD *wp = word_list; wp; wp = wp->next)
     if (strcmp(wp->word_name, word) == 0)

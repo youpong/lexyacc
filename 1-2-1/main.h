@@ -17,5 +17,5 @@ typedef struct word {
   struct word *next;
 } WORD;
 
-void add_word(WORD_TYPE type, char *word);
-WORD_TYPE lookup_word(char *word);
+void add_word(WORD_TYPE, char *);
+WORD_TYPE lookup_word(char *);
