@@ -17,13 +17,14 @@ static int state;
 	  return 0; /* end of sentence */
 	}
 	
-verb 	{ state = VERB; }
+verb 	{ state = VERB;   printf("VERB\n");}
 adj  	{ state = ADJECTIVE; }
-adv	{ state = ADVERB; }
+adv	{ state = ADVERB; printf("ADVERB\n");}
 noun 	{ state = NOUN; }
 prep	{ state = PREPOSITION; }
 pron	{ state = PRONOUN; }
 conj	{ state = CONJUNCTION; }
+article { state = ARTICLE; }
 
 [a-zA-Z]+ {
     if(state != LOOKUP) {
@@ -38,7 +39,8 @@ conj	{ state = CONJUNCTION; }
 	case NOUN:        return NOUN;
 	case PREPOSITION: return PREPOSITION;
 	case PRONOUN:     return PRONOUN;
-	case CONJUNCTION: return CONJUNCTION;
+        case CONJUNCTION: return CONJUNCTION;
+        case ARTICLE:     return ARTICLE;
 	default: /* don't return, just ignore it */
 	    printf("%s: don't recognize\n", yytext);
 	}

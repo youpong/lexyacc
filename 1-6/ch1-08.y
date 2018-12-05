@@ -11,7 +11,7 @@
 #include "main.h"
 %}
 
-%token NOUN PRONOUN VERB ADVERB ADJECTIVE PREPOSITION CONJUNCTION
+%token NOUN PRONOUN VERB ADVERB ADJECTIVE PREPOSITION CONJUNCTION ARTICLE
 
 %%
 sentence: simple_sentence   { printf("Parsed a simple sentence.\n"); }
@@ -19,18 +19,24 @@ sentence: simple_sentence   { printf("Parsed a simple sentence.\n"); }
 	;
 	
 simple_sentence: subject verb object
-        | subject verb object prep_phrase
+        |        subject verb object prep_phrase
         ;
 
 compound_sentence: simple_sentence CONJUNCTION simple_sentence
         | compound_sentence CONJUNCTION simple_sentence
 	;
 	
-subject:  NOUN
+subject:   NOUN
         |  PRONOUN
         |  ADJECTIVE subject
+	|  ADVERB ADJECTIVE subject
+        |  noun_phrase
         ;
 
+noun_phrase: ARTICLE ADJECTIVE NOUN
+        | ARTICLE NOUN
+        ;
+	
 verb:     VERB
         |  ADVERB VERB
         |  verb VERB
@@ -38,7 +44,9 @@ verb:     VERB
        
 object:	  NOUN
         |  ADJECTIVE object
+	| ADVERB ADJECTIVE object
         ;
+	
 prep_phrase: PREPOSITION NOUN
         ;
 %%
