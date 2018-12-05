@@ -15,10 +15,10 @@ clean:
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LIBS)
 
-$(OBJS): main.h
+$(OBJS): main.h lex.yy.h
 
-lex.yy.c: lex.l
-	$(LEX) lex.l
+lex.yy.h lex.yy.c: ch1-04.l
+	$(LEX) ch1-04.l
 
 .c.o:
 	$(CC) -c $< $(CFLAGS)
