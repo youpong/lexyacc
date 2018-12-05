@@ -10,7 +10,7 @@ OBJS = lex.yy.o lib.o main.o
 all: $(TARGET)
 
 clean:
-	- rm -f lex.yy.c $(OBJS) $(TARGET)
+	- rm -f lex.yy.[ch] $(OBJS) $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LIBS)
