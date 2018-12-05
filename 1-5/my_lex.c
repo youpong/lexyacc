@@ -1,6 +1,6 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 
 #include "word.h"
 
@@ -9,27 +9,25 @@
  * NUMBER, COMMENT, TEXT, COMMAND: type
  * c: unknown
  */
-int
-yylex(void)
-{
+int yylex(void) {
   int c;
 
-  while((c = getchar()) == ' ' || c == '\t')
+  while ((c = getchar()) == ' ' || c == '\t')
     ;
 
-  if(c == EOF)
+  if (c == EOF)
     return 0;
 
-  /* number 
+  /* number
    * [0-9]+|
-   * [0-9]+\.[0-9]* 
+   * [0-9]+\.[0-9]*
    */
-  if(isdigit(c)) { 
+  if (isdigit(c)) {
     while ((c = getchar()) != EOF && isdigit(c))
       ;
-    if(c == '.')
-      while((c=getchar()) != EOF && isdigit(c))
-	;
+    if (c == '.')
+      while ((c = getchar()) != EOF && isdigit(c))
+        ;
     ungetc(c, stdin);
     return NUMBER;
   }
@@ -37,35 +35,34 @@ yylex(void)
   /* number
    * \.[0-9]+
    */
-  if(c == '.') { /* number */
+  if (c == '.') { /* number */
     int type = c;
     while ((c = getchar()) != EOF && isdigit(c))
       type = NUMBER;
     ungetc(c, stdin);
     return type;
   }
-  
-  if(c == '#') { /* comment */
-    while((c = getchar()) != EOF && c != '\n')
+
+  if (c == '#') { /* comment */
+    while ((c = getchar()) != EOF && c != '\n')
       ;
     ungetc(c, stdin);
     return COMMENT;
   }
-  if(c == '"') { /* literal text */
-    while((c = getchar()) != EOF &&
-	  c != '"' && c != '\n')
+  if (c == '"') { /* literal text */
+    while ((c = getchar()) != EOF && c != '"' && c != '\n')
       ;
-    if(c == '\n')
+    if (c == '\n')
       ungetc(c, stdin);
     return TEXT;
   }
-  
-  if( isalpha(c) ) { /* check to see if it is a command */
-    while((c = getchar()) != EOF && isalnum(c))
+
+  if (isalpha(c)) { /* check to see if it is a command */
+    while ((c = getchar()) != EOF && isalnum(c))
       ;
     ungetc(c, stdin);
     return COMMAND;
   }
-  
+
   return c;
 }
