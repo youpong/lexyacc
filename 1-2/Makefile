@@ -8,7 +8,7 @@ LIBS = -ll
 
 all: word0 word1
 clean:
-	- rm -f lex.yy.c lex.yy.h $(OBJS) $(TARGET) word0 word1
+	- rm -f lex.l lex.yy.c lex.yy.h $(OBJS) $(TARGET) word0 word1
 
 word0: ch1-02.l
 	cp ch1-02.l lex.l
