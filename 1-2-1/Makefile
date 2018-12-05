@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -std=c11 -D_POSIX_C_SOURCE=200809L
 LIBS = -ll
 
 LEX = lex
