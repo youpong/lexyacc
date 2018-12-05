@@ -1,7 +1,7 @@
 %{
 /*
- * this sample demonstrates (very) simple recognition:
- * a verb/not a verb
+ * We expand upon the first example by adding recognition of some other
+ * parts of speech
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -40,12 +40,15 @@ quietly |
 calmly  |
 angrily	{ printf("%s: is an adverb\n", yytext); }
 
+
 to      |
 from    |
 behind  |
 above   |
 below   |
-between { printf("%s: is a preposition\n", yytext); }
+between |
+below   { /* duplicate entry below.  as is original. */
+          printf("%s: is a preposition\n", yytext); }
 
 if      |
 then    |

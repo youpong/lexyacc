@@ -2,21 +2,31 @@ CC = gcc
 CFLAGS = -Wall -std=c11 -D_POSIX_C_SOURCE=200809L
 LEX = lex
 
-TARGET = word0
-OBJS = lex0.yy.o main.o
+TARGET = word
+OBJS = lex.yy.o main.o
 LIBS = -ll
 
-all: $(TARGET)
+all: word0 word1
 clean:
-	- rm -f lex0.yy.c lex0.yy.h $(OBJS) $(TARGET)
+	- rm -f lex.yy.c lex.yy.h $(OBJS) $(TARGET) word0 word1
+
+word0: ch1-02.l
+	cp ch1-02.l lex.l
+	rm -f lex.yy.c
+	make word
+	mv word word0
+word1: ch1-03.l
+	cp ch1-03.l lex.l
+	rm -f lex.yy.c
+	make word
+	mv word word1
 
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LIBS)
 
-lex0.yy.c lex0.yy.h: ch1-02.l
-	$(LEX) --header-file=lex0.yy.h ch1-02.l
-	mv lex.yy.c lex0.yy.c
-main.o: lex0.yy.h
+lex.yy.c lex.yy.h: lex.l
+	$(LEX) --header-file=lex.yy.h lex.l
+main.o: lex.yy.h
 
 .c.o:
 	$(CC) -c $< $(CFLAGS)
