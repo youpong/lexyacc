@@ -8,9 +8,9 @@ YACC = yacc
 TARGET = word
 OBJS = y.tab.o lex.yy.o main.o lib.o
 
-all: $(TARGET)
+all: word0 word1
 clean:
-	- rm -f y.tab.[ch] lex.yy.[ch] $(OBJS) $(TARGET)
+	- rm -f y.tab.[ch] lex.yy.[ch] parse.y $(OBJS) word[01]
 
 word0:
 	cp ch1-05.y parse.y

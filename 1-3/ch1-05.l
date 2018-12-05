@@ -41,7 +41,6 @@ conj	{ state = CONJUNCTION; }
 	case CONJUNCTION: return CONJUNCTION;
 	default: /* don't return, just ignore it */
 	    printf("%s: don't recognize\n", yytext);
-	    break;
 	}
     }
 }    
