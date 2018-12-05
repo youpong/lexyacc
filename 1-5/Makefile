@@ -1,22 +1,25 @@
-CC = gcc
-CFLAGS = -Wall -DDEBUG=0
+CC = clang
+CFLAGS = -Wall -DDEBUG=0 -std=c11 -D_POSIX_C_SOURCE=200809L
 LIBS = -ll
 
 LEX = lex
 
-all: word word2
-check: word word2
+all: word-h word-m
+check: word-h word-m
 	sh test.sh
 clean:
-	- rm -f my_lex.o lex.yy.c lex.yy.o word word2
+	- rm -f *.o lex.yy.[ch]  word-h word-m
 
-word: my_lex.o
-	$(CC) -o $@ $<
+word-h: my_lex.o main.o
+	$(CC) -o $@ my_lex.o main.o
 
-word2: lex.yy.o
-	$(CC) -o $@ $< $(LIBS)
+word-m: lex.yy.o main.o
+	$(CC) -o $@ lex.yy.o main.o $(LIBS)
 
-lex.yy.c: lex.l
-	$(LEX) lex.l
+lex.yy.o my_lex.o: word.h
+main.o: lex.yy.h
+
+lex.yy.c lex.yy.h: ch1-07.l
+	$(LEX) --header-file=lex.yy.h ch1-07.l
 .c.o:
 	$(CC) -c $< $(CFLAGS)

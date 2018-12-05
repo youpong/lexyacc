@@ -1,5 +1,5 @@
-./word  <sample.input >tmp
-./word2 <sample.input >tmp2
+./word-h <sample.input >tmp
+./word-m <sample.input >tmp2
 echo -n "Test 1 .."
 if cmp tmp tmp2; then
     echo "pass"

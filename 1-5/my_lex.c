@@ -4,26 +4,13 @@
 
 #include "word.h"
 
-int lexer(void);
-  
-int
-main(int argc, char* argv[])
-{
-  int val;
-  
-  while((val = lexer()) != 0)
-    printf("value is %d\n", val);
-
-  return EXIT_SUCCESS;
-}
-
 /*
  * 0: end
  * NUMBER, COMMENT, TEXT, COMMAND: type
  * c: unknown
  */
 int
-lexer(void)
+yylex(void)
 {
   int c;
 
