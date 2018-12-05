@@ -5,10 +5,8 @@
 
 WORD_TYPE state;
 
-int
-main(int argc, char* argv[])
-{
-	yylex();
+int main(int argc, char *argv[]) {
+  yylex();
 
-	return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }

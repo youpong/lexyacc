@@ -1,16 +1,14 @@
+#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "main.h"
 
 static WORD *word_list = NULL;
 
-void
-add_word(WORD_TYPE type, char *word)
-{
+void add_word(WORD_TYPE type, char *word) {
   WORD *wp;
 
-  if(lookup_word(word) != LOOKUP) {
+  if (lookup_word(word) != LOOKUP) {
     printf("!!! warning: word %s already defined \n", word);
     return;
   }
@@ -21,7 +19,7 @@ add_word(WORD_TYPE type, char *word)
   wp->next = word_list;
 
   /* have to copy the word itself as well */
-  wp->word_name = (char *)malloc(strlen(word)+1);
+  wp->word_name = (char *)malloc(strlen(word) + 1);
   strcpy(wp->word_name, word);
   wp->word_type = type;
   word_list = wp;
@@ -32,12 +30,11 @@ add_word(WORD_TYPE type, char *word)
  * else: word_type
  */
 WORD_TYPE
-lookup_word(char *word)
-{
+lookup_word(char *word) {
   /* search down the list looking for the word */
-  for(WORD *wp = word_list; wp; wp = wp->next) 
-    if(strcmp(wp->word_name, word) == 0)
+  for (WORD *wp = word_list; wp; wp = wp->next)
+    if (strcmp(wp->word_name, word) == 0)
       return wp->word_type;
-  
+
   return LOOKUP; /* not found */
 }
