@@ -6,7 +6,7 @@
 %token WORD
 
 %%
-sentence: WORD
-        | WORD sentence
+sentence: WORD          { printf("WORD\n"); }
+        | WORD sentence { printf("WORD "); }
         ;
 %%

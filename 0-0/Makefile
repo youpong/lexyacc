@@ -1,4 +1,4 @@
-CC = gcc
+CC = clang
 CFLAGS = -Wall -g -DYYDEBUG=1 -DDEBUG=0
 
 TARGET = cl
