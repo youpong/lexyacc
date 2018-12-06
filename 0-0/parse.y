@@ -3,10 +3,14 @@
 #include "main.h"
 %}
 
-%token WORD
+%union {
+  char *word;
+}
+
+%token <word> WORD
 
 %%
-sentence: WORD          { printf("WORD\n"); }
-        | WORD sentence { printf("WORD "); }
+sentence: sentence WORD { printf("WORD(%d:%s) ", cnt++, $2); }
+        | WORD          { printf("WORD(%d:%s) ", cnt++, $1); }
         ;
 %%

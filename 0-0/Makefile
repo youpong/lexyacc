@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -Wall -g -DYYDEBUG=1 -DDEBUG=0
+CFLAGS = -Wall -g -std=c11 -DYYDEBUG=1 -DDEBUG=0 -D_POSIX_C_SOURCE=200809L
 
 TARGET = cl
 OBJS = lex.yy.o y.tab.o main.o 
