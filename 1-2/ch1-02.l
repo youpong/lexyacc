@@ -10,7 +10,7 @@
 %option nounput noinput
 
 %%
-[\t ]+ ; /* ignore whitespace */;
+[ \t\n]+ ; /* ignore whitespace */;
 
 is     |
 am     |
@@ -33,8 +33,8 @@ have   |
 had    |
 go     { printf("%s: is a verb\n", yytext); }
 
-[a-zA-Z]+ { printf("%s: don't recognize, might be a noun\n", yytext); }
+[a-zA-Z]+ { printf("%s: is not a verb\n", yytext); }
 
-.|\n	  ;/* normal default anyway */ 
+.      { printf("%s\n", yytext); /* normal default anyway */ }
 %%
 

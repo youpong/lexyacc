@@ -21,6 +21,9 @@ word1: ch1-03.l
 	make word
 	mv word word1
 
+check: word0 word1
+	./test.sh
+
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LIBS)
 

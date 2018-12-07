@@ -10,7 +10,7 @@
 %option nounput noinput
 
 %%
-[\t ]+ ; /* ignore whitespace */;
+[ \t\n]+ ; /* ignore whitespace */;
 
 is     |
 am     |
@@ -72,6 +72,6 @@ they	{ printf("%s: is a pronoun\n", yytext); }
 
 [a-zA-Z]+ { printf("%s: don't recognize, might be a noun\n", yytext); }
 
-.|\n	  ;/* normal default anyway */ 
+.	{ ECHO; printf("\n");/* normal default anyway */  }
 %%
 
