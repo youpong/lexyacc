@@ -12,6 +12,9 @@ all: $(TARGET)
 clean:
 	- rm -f lex.yy.[ch] $(OBJS) $(TARGET)
 
+check: $(TARGET)
+	./test.sh
+
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LIBS)
 

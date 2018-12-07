@@ -1,14 +1,16 @@
+is: verb
+dog: noun
 run: verb
+chew: verb
+eat: verb
+sleep: verb
+cow: noun
+horse: noun
+talk: verb
+if: conjunction
 their: adjective
 very: adverb
-dog: noun
 at: preposition
 you: pronoun
-if: conjunction
-eat: verb
-your: adjective
-simply: adverb
-cat: noun
-from: preposition
-I: pronoun
-and: conjunction
+!!! warning: word is already defined 
+walk: don't recognize

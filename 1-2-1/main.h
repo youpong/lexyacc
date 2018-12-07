@@ -12,8 +12,8 @@ typedef enum {
 extern WORD_TYPE state;
 
 typedef struct word {
-  WORD_TYPE word_type;
-  char *word_name;
+  WORD_TYPE type;
+  char *name;
   struct word *next;
 } WORD;
 

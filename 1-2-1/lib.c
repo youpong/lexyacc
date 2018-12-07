@@ -5,11 +5,11 @@
 
 static WORD *word_list = NULL;
 
-void add_word(WORD_TYPE type, char *word) {
+void add_word(WORD_TYPE type, char *name) {
   WORD *wp;
 
-  if (lookup_word(word) != LOOKUP) {
-    printf("!!! warning: word %s already defined \n", word);
+  if (lookup_word(name) != LOOKUP) {
+    printf("!!! warning: word %s already defined \n", name);
     return;
   }
 
@@ -19,8 +19,8 @@ void add_word(WORD_TYPE type, char *word) {
   wp->next = word_list;
 
   /* have to copy the word itself as well */
-  wp->word_name = strdup(word);
-  wp->word_type = type;
+  wp->name = strdup(name);
+  wp->type = type;
   word_list = wp;
 }
 
@@ -28,11 +28,11 @@ void add_word(WORD_TYPE type, char *word) {
  * LOOKUP: not found
  * else: word_type
  */
-WORD_TYPE lookup_word(char *word) {
+WORD_TYPE lookup_word(char *name) {
   /* search down the list looking for the word */
   for (WORD *wp = word_list; wp; wp = wp->next)
-    if (strcmp(wp->word_name, word) == 0)
-      return wp->word_type;
+    if (strcmp(wp->name, name) == 0)
+      return wp->type;
 
   return LOOKUP; /* not found */
 }
