@@ -1,5 +1,6 @@
+/* DEFINITION SECTION */
 %{
-/*
+/* 
  * this sample demonstrates (very) simple recognition:
  * a verb/not a verb
  */
@@ -9,7 +10,9 @@
 
 %option nounput noinput
 
+/* RULES SECTION under %% */
 %%
+ 
 [ \t\n]+ ; /* ignore whitespace */;
 
 is     |
@@ -37,4 +40,5 @@ go     { printf("%s: is a verb\n", yytext); }
 
 .      { printf("%s\n", yytext); /* normal default anyway */ }
 %%
+/* USER SUBROUTINES SECTION */
 
