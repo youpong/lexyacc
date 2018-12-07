@@ -20,7 +20,7 @@ echo2: lex2.l
 	make echo
 	mv echo echo2
 
-check: $(TARGET)
+check: echo0 echo1 echo2
 	sh test.sh
 clean:
 	- rm -f lex.yy.c lex.yy.o echo[012] lex.l

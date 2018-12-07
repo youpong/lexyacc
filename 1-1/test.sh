@@ -2,7 +2,7 @@
 #         0 .. success 
 check_equality() {
     for i in 0 1 2; do
-	cat input | ./echo0 > output
+	cat input | ./echo"$i" > output
 	if ! cmp input output; then
 	    return 1
 	fi
