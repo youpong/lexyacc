@@ -11,12 +11,13 @@ TEST_LIBS = -lcunit
 
 all: cl0 cl1 cl2
 
-check: $(TEST_TARGET)
+check: $(TEST_TARGET) cl0 cl1 cl2
 	./$(TEST_TARGET)
 	./test.sh
+
 clean:
 	- rm -f $(TARGET) $(OBJS) $(TEST_TARGET) $(TEST_OBJS) \
-                lex.yy.[ch] y.tab.[ch] cl[012]
+                lex.yy.[ch] y.tab.[ch] cl[012] main.c
 cl0:
 	cp main0.c main.c
 	make cl
