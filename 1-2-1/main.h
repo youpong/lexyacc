@@ -1,12 +1,12 @@
 typedef enum {
   LOOKUP = 0, /* default - looking rather than defining. */
-  VERB,
+  VERB = 256,
   ADJ,
   ADV,
   NOUN,
   PREP,
   PRON,
-  CONJ
+  CONJ,
 } WORD_TYPE;
 
 extern WORD_TYPE state;
