@@ -17,7 +17,7 @@ else
 fi
 
 echo -n "Test: word 1..."
-if check_equality ./word sample/0.input sample/0.output; then
+if check_equality ./word sample/1.input sample/1.output; then
     echo "passed"
 else
     echo "FAILED"
