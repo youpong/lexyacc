@@ -7,9 +7,8 @@
 int cnt;
 
 int main(int argc, char *argv[]) {
-  yyin = stdin;
-  while(!feof(yyin))
-    yyparse();
+  yyparse();
+  yyparse();
 
   return EXIT_SUCCESS;
 }
