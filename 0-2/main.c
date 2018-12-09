@@ -7,6 +7,9 @@
 int cnt;
 
 int main(int argc, char *argv[]) {
+  /* 
+   * 規則にマッチしたあと、yyparse() は終了し、状態が初期に戻る。
+   */
   yyparse();
   yyparse();
 
