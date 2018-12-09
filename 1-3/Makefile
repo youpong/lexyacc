@@ -1,5 +1,6 @@
 CC = clang
-CFLAGS = -Wall -g -std=c11 -D_POSIX_C_SOURCE=200809L
+CFLAGS = -Wall -g -std=c11 \
+         -D_POSIX_C_SOURCE=200809L -DYYDEBUG -DYYERROR_VERBOSE
 LIBS = -ly -ll
 
 LEX = lex
@@ -12,7 +13,10 @@ all: word0 word1
 clean:
 	- rm -f y.tab.[ch] lex.yy.[ch] parse.y $(OBJS) word[01]
 
-word0:
+check: word0 word1
+	./test.sh
+
+word0: 
 	cp ch1-05.y parse.y
 	make word
 	mv word word0

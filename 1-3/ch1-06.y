@@ -11,6 +11,10 @@
 #include "main.h"
 %}
 
+%union {
+  char *word;
+}
+  
 %token NOUN PRONOUN VERB ADVERB ADJECTIVE PREPOSITION CONJUNCTION
 
 %%

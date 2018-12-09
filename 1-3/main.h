@@ -1,4 +1,5 @@
-int yyerror(char *);
+int yyerror(const char *);
+extern int yydebug;
 
 #define LOOKUP 0
 

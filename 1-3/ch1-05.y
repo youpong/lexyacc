@@ -8,10 +8,18 @@
 #include "main.h"
 %}
 
-%token NOUN PRONOUN VERB ADVERB ADJECTIVE PREPOSITION CONJUNCTION
+%union {
+  char *word;
+}
+
+%token <word> NOUN PRONOUN VERB ADVERB ADJECTIVE PREPOSITION CONJUNCTION
+%type <word> subject object
 
 %%
-sentence: subject VERB object { printf("Sentence is valid.\n"); }
+sentence: subject VERB object {
+              printf("Sentence is valid(s: %s, v: %s, o: %s).\n",
+	          $1, $2, $3);
+	  }
         ;
 
 subject:  NOUN

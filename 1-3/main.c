@@ -3,17 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
-  if (yyin == NULL) {
-    yyin = stdin;
-  }
-  while (!feof(yyin)) {
-    yyparse();
-  }
-  return EXIT_SUCCESS;
-}
+int yydebug = 0; /* 0..off, 1..on */
 
-int yyerror(char *s) {
-  fprintf(stderr, "%s\n", s);
-  return 0;
+int main(int argc, char *argv[]) {
+  yyin = stdin;
+  yyparse();
+
+  return EXIT_SUCCESS;
 }

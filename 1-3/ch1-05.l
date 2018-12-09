@@ -5,13 +5,14 @@
 
 #include "main.h" 
 #include "y.tab.h" /* token codes from the parser */
-
+#include <string.h>
 static int state;
 %}
 
 %option nounput noinput
 
 %%
+^#.*$   ; /* ignore comment */
 \n	{ state = LOOKUP; }
 \.\n	{ state = LOOKUP;
 	  return 0; /* end of sentence */
@@ -31,6 +32,7 @@ conj	{ state = CONJUNCTION; }
     	    printf("!!! warning: word %s already defined\n", yytext);
 	}    
     } else {
+        yylval.word = strdup(yytext);
 	switch(lookup_word(yytext)) {
 	case VERB:        return VERB;
 	case ADJECTIVE:   return ADJECTIVE;
