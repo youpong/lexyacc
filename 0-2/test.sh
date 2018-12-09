@@ -9,23 +9,8 @@ check_equality() {
     return 0
 }
 
-echo -n "Test: cl0  ..."
-if check_equality ./cl0 sample/0.input sample/0.output; then
-    echo "passed"
-else
-    echo "FAILED"
-fi
-
-echo -n "Test: cl1  ..."
-if check_equality ./cl1 sample/0.input sample/1.output; then
-    echo "passed"
-else
-    echo "FAILED"
-fi
-
-echo -n "Test: cl2  ..."
-./cl2 sample/0.input sample/1.input >tmp
-if cmp "sample/2.output" tmp; then
+echo -n "Test: cl  ..."
+if check_equality ./cl sample/0.input sample/0.output; then
     echo "passed"
 else
     echo "FAILED"

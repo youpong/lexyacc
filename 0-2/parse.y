@@ -10,7 +10,6 @@
 %token <word> WORD
 
 %%
-sentence: sentence WORD { printf("WORD(%d:%s) ", cnt++, $2); }
-        | WORD          { printf("WORD(%d:%s) ", cnt++, $1); }
+sentence: WORD WORD { printf("WORD(%s) WORD(%s)\n", $1, $2); }
         ;
 %%

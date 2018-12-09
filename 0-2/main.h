@@ -1,5 +1,5 @@
 /* extern global variables */
 /* sub routine */
-int yyerror(char *);
+int yyerror(const char *);
 
 extern int cnt;

@@ -7,10 +7,9 @@
 int cnt;
 
 int main(int argc, char *argv[]) {
-  yyparse();
-  yyparse();
-  printf("\n");
-  
+  yyin = stdin;
+  while(!feof(yyin))
+    yyparse();
+
   return EXIT_SUCCESS;
 }
-

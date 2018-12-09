@@ -1,5 +1,6 @@
 CC = clang
-CFLAGS = -Wall -g -std=c11 -DYYDEBUG=1 -DDEBUG=0 -D_POSIX_C_SOURCE=200809L
+CFLAGS = -Wall -g -std=c11 \
+         -DYYDEBUG -DYYERROR_VERBOSE -DDEBUG=0 -D_POSIX_C_SOURCE=200809L
 
 TARGET = cl
 OBJS = lex.yy.o y.tab.o main.o 
@@ -9,27 +10,15 @@ TEST_TARGET = test
 TEST_OBJS = test.o test_func.o
 TEST_LIBS = -lcunit
 
-all: cl0 cl1 cl2
+all: $(TARGET)
 
-check: $(TEST_TARGET) cl0 cl1 cl2
+check: $(TEST_TARGET) 
 	./$(TEST_TARGET)
 	./test.sh
 
 clean:
 	- rm -f $(TARGET) $(OBJS) $(TEST_TARGET) $(TEST_OBJS) \
-                lex.yy.[ch] y.tab.[ch] cl[012] main.c
-cl0:
-	cp main0.c main.c
-	make cl
-	mv cl cl0
-cl1:
-	cp main1.c main.c
-	make cl
-	mv cl cl1
-cl2:
-	cp main2.c main.c
-	make cl
-	mv cl cl2
+                lex.yy.[ch] y.tab.[ch] cl
 
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LIBS)
