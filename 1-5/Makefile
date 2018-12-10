@@ -17,7 +17,7 @@ word-m: lex.yy.o main.o
 	$(CC) -o $@ lex.yy.o main.o $(LIBS)
 
 lex.yy.o my_lex.o: word.h
-main.o: lex.yy.h
+main.o my_lex.o: lex.yy.h
 
 lex.yy.c lex.yy.h: ch1-07.l
 	$(LEX) --header-file=lex.yy.h ch1-07.l
