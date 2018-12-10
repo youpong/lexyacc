@@ -27,49 +27,20 @@ int yylex(void) {
   if (c == EOF)
     return 0;
 
-  /* number(1 of 2)
-   * [0-9]+         |
-   * [0-9]+\.[0-9]+ |
-   */
-  if (isdigit(c)) {
-    *p++ = c;
+  /* number */
+  if (c == '.' || isdigit(c)) {
     while ((c = getc(yyin)) != EOF && isdigit(c))
-      *p++ = c;
-    if (c == '.') {
-      *p++ = c;
-      if ((c = getc(yyin)) != EOF && isdigit(c)) {
-	*p++ = c;
-	while ((c = getc(yyin)) != EOF && isdigit(c))
-	  *p++ = c;
-      } else {
-        ungetc(c, yyin);
-        ungetc(*--p, yyin);
-        *p = '\0';
-        return NUMBER;
-      }
-    }
+      ;
+    if (c == '.')
+      while ((c = getc(yyin)) != EOF && isdigit(c))
+        ;
     ungetc(c, yyin);
-    *p = '\0';
     return NUMBER;
   }
 
-  /* number(2 of 2)
-   * \.[0-9]+ reutnr NUMBER;
-   */
-  if (c == '.') {
-    int type = c;
-    *p++ = c;
-    while ((c = getc(yyin)) != EOF && isdigit(c)) {
-      type = NUMBER;
-      *p++ = c;
-    }
-    ungetc(c, yyin);
-    *p = '\0';
-    return type;
-  }
-
   /* #.* return COMMENT */
-  if (c == '#') { /* comment */
+  if (c == '#') {
+    int index = 1;
     while ((c = getc(yyin)) != EOF && c != '\n')
       ;
     ungetc(c, yyin);
@@ -78,28 +49,18 @@ int yylex(void) {
 
   /* \"[^"\n]*\" return TEXT */
   if (c == '"') {
-    *p++ = c;
+    int index = 1;
     while ((c = getc(yyin)) != EOF && c != '"' && c != '\n')
-      *p++ = c;
-    if (c == '"') {
-      *p++ = c;
-      *p = '\0';
-      return TEXT;
-    }
-
-    /*
-     * '"' で閉じられていないので、'"'以後読み込んだデータを積み直す
-     */
-    *p++ = c;
-    while (p - yytext > 1) {
-      ungetc(*--p, yyin);
-    }
-
-    return yytext[0];
+      ;
+    if (c == '\n')
+      ungetc(c, yyin);
+    return TEXT;
   }
 
   /* check to see if it is a command */
   if (isalpha(c)) {
+    int index = 1;
+
     while ((c = getc(yyin)) != EOF && isalnum(c))
       ;
     ungetc(c, yyin);
