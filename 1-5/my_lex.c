@@ -18,100 +18,99 @@ int yylex(void) {
   char *p;
   yytext = (char *)malloc(sizeof(char) * 100);
 
-start:
-  p = yytext;
+  while (true) {
+    p = yytext;
 
-  /* [ \t]+ ;ignore white space */
-  while ((c = getc(yyin)) == ' ' || c == '\t')
-    ;
+    /* [ \t]+ ;ignore white space */
+    while ((c = getc(yyin)) == ' ' || c == '\t')
+      ;
 
-  if (c == EOF)
-    return 0;
+    if (c == EOF)
+      return 0;
 
-  /* number(1 of 2)
-   * [0-9]+         |
-   * [0-9]+\.[0-9]+ |
-   */
-  if (isdigit(c)) {
-    *p++ = c;
-    while ((c = getc(yyin)) != EOF && isdigit(c))
-      *p++ = c;
-    if (c == '.') {
-      *p++ = c;
-      if ((c = getc(yyin)) == EOF || !isdigit(c)) {
-        ungetc(c, yyin);
-        ungetc(c, yyin);
-        *--p = '\0';
-        return NUMBER;
-      }
+    /* number(1 of 2)
+     * [0-9]+         |
+     * [0-9]+\.[0-9]+ |
+     */
+    if (isdigit(c)) {
       *p++ = c;
       while ((c = getc(yyin)) != EOF && isdigit(c))
         *p++ = c;
+      if (c == '.') {
+        *p++ = c;
+        if ((c = getc(yyin)) == EOF || !isdigit(c)) {
+          ungetc(c, yyin);
+          ungetc(c, yyin);
+          *--p = '\0';
+          return NUMBER;
+        }
+        *p++ = c;
+        while ((c = getc(yyin)) != EOF && isdigit(c))
+          *p++ = c;
+      }
+      ungetc(c, yyin);
+      *p = '\0';
+      return NUMBER;
     }
-    ungetc(c, yyin);
-    *p = '\0';
-    return NUMBER;
-  }
 
-  /* number(2 of 2)
-   * \.[0-9]+ reutnr NUMBER;
-   */
-  if (c == '.') {
-    int type = c;
-    *p++ = c;
-    while ((c = getc(yyin)) != EOF && isdigit(c)) {
-      type = NUMBER;
+    /* number(2 of 2)
+     * \.[0-9]+ reutnr NUMBER;
+     */
+    if (c == '.') {
+      int type = c;
       *p++ = c;
+      while ((c = getc(yyin)) != EOF && isdigit(c)) {
+        type = NUMBER;
+        *p++ = c;
+      }
+      ungetc(c, yyin);
+      *p = '\0';
+      return type;
     }
-    ungetc(c, yyin);
-    *p = '\0';
-    return type;
-  }
 
-  /* #.* return COMMENT */
-  if (c == '#') { /* comment */
-    while ((c = getc(yyin)) != EOF && c != '\n')
-      ;
-    ungetc(c, yyin);
-    return COMMENT;
-  }
+    /* #.* return COMMENT */
+    if (c == '#') { /* comment */
+      while ((c = getc(yyin)) != EOF && c != '\n')
+        ;
+      ungetc(c, yyin);
+      return COMMENT;
+    }
 
-  /* \"[^"\n]*\" return TEXT */
-  while (c == '"') {
-    *p++ = c;
-    while ((c = getc(yyin)) != EOF && c != '"' && c != '\n')
-      *p++ = c;
+    /* \"[^"\n]*\" return TEXT */
     if (c == '"') {
       *p++ = c;
+      while ((c = getc(yyin)) != EOF && c != '"' && c != '\n')
+        *p++ = c;
+      if (c == '"') {
+        *p++ = c;
+        *p = '\0';
+        return TEXT;
+      }
+
+      /*
+       * '"' で閉じられていないので、'"'以後読み込んだデータを積み直して
+       * 最初からやり直す
+       */
+      *p++ = c;
       *p = '\0';
-      return TEXT;
+      // printf("D: push back(%s)\n", yytext);
+      while (p - yytext > 1) {
+        ungetc(*--p, yyin);
+      }
+
+      continue;
     }
 
-    /*
-     * '"' で閉じられていないので、'"'以後読み込んだデータを積み直して
-     * 最初からやり直す
-     */
-    *p++ = c;
-    *p = '\0';
-    // printf("D: push back(%s)\n", yytext);
-    while (p - yytext > 1) {
-      ungetc(*--p, yyin);
+    /* check to see if it is a command */
+    if (isalpha(c)) {
+      while ((c = getc(yyin)) != EOF && isalnum(c))
+        ;
+      ungetc(c, yyin);
+      return COMMAND;
     }
 
-    goto start;
+    /* \n return '\n'; */
+    if (c == '\n')
+      return c;
   }
-
-  /* check to see if it is a command */
-  if (isalpha(c)) {
-    while ((c = getc(yyin)) != EOF && isalnum(c))
-      ;
-    ungetc(c, yyin);
-    return COMMAND;
-  }
-
-  /* \n return '\n'; */
-  if (c == '\n')
-    return c;
-
-  goto start;
 }
