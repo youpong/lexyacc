@@ -40,7 +40,6 @@ int yylex(void) {
 
   /* #.* return COMMENT */
   if (c == '#') {
-    int index = 1;
     while ((c = getc(yyin)) != EOF && c != '\n')
       ;
     ungetc(c, yyin);
@@ -49,7 +48,6 @@ int yylex(void) {
 
   /* \"[^"\n]*\" return TEXT */
   if (c == '"') {
-    int index = 1;
     while ((c = getc(yyin)) != EOF && c != '"' && c != '\n')
       ;
     if (c == '\n')
@@ -59,8 +57,6 @@ int yylex(void) {
 
   /* check to see if it is a command */
   if (isalpha(c)) {
-    int index = 1;
-
     while ((c = getc(yyin)) != EOF && isalnum(c))
       ;
     ungetc(c, yyin);
