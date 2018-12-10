@@ -92,13 +92,11 @@ int yylex(void) {
        * 最初からやり直す
        */
       *p++ = c;
-      *p = '\0';
-      // printf("D: push back(%s)\n", yytext);
       while (p - yytext > 1) {
         ungetc(*--p, yyin);
       }
 
-      continue;
+      return yytext[0];
     }
 
     /* check to see if it is a command */
@@ -109,8 +107,7 @@ int yylex(void) {
       return COMMAND;
     }
 
-    /* \n return '\n'; */
-    if (c == '\n')
-      return c;
+    /* . ECHO; gleaning */
+    return c;
   }
 }
