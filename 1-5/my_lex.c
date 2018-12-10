@@ -37,15 +37,16 @@ int yylex(void) {
       *p++ = c;
     if (c == '.') {
       *p++ = c;
-      if ((c = getc(yyin)) == EOF || !isdigit(c)) {
+      if ((c = getc(yyin)) != EOF && isdigit(c)) {
+	*p++ = c;
+	while ((c = getc(yyin)) != EOF && isdigit(c))
+	  *p++ = c;
+      } else {
         ungetc(c, yyin);
         ungetc(*--p, yyin);
         *p = '\0';
         return NUMBER;
       }
-      *p++ = c;
-      while ((c = getc(yyin)) != EOF && isdigit(c))
-        *p++ = c;
     }
     ungetc(c, yyin);
     *p = '\0';
@@ -87,8 +88,7 @@ int yylex(void) {
     }
 
     /*
-     * '"' で閉じられていないので、'"'以後読み込んだデータを積み直して
-     * 最初からやり直す
+     * '"' で閉じられていないので、'"'以後読み込んだデータを積み直す
      */
     *p++ = c;
     while (p - yytext > 1) {
