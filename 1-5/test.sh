@@ -1,7 +1,29 @@
-./word-h <sample/0.input >tmp
-./word-m <sample/0.input >tmp2
-echo -n "Test 1 .."
-if cmp tmp tmp2; then
+check_equality() {
+    ./word-h $1 >tmp
+    ./word-m $1 >tmp2
+    cmp tmp tmp2
+    return $?
+}
+
+echo -n "Test 0 .."
+if check_equality sample/0.input; then
     echo "pass"
+else
+    echo "failed"
 fi
+
+echo -n "Test 1 .."
+if check_equality sample/1.input; then
+    echo "pass"
+else
+    echo "failed"
+fi
+
+echo -n "Test 2 .."
+if check_equality sample/2.input; then
+    echo "pass"
+else
+    echo "failed"
+fi
+
 rm tmp tmp2
