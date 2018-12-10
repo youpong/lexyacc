@@ -4,11 +4,20 @@ LIBS = -ll
 
 LEX = lex
 
-all: word-h word-m
-check: word-h word-m
+all:   word-h0 word-h1 word-m
+check: word-h0 word-h1 word-m
 	sh test.sh
 clean:
-	- rm -f *.o lex.yy.[ch]  word-h word-m
+	- rm -f *.o lex.yy.[ch]  word-h[01] word-m my_lex.c
+
+word-h0:
+	cp ch1-07.c my_lex.c
+	make word-h
+	mv word-h word-h0
+word-h1:
+	cp ch1-07-1.c my_lex.c
+	make word-h
+	mv word-h word-h1
 
 word-h: my_lex.o main.o
 	$(CC) -o $@ my_lex.o main.o

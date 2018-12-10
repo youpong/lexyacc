@@ -1,7 +1,9 @@
 check_equality() {
-    ./word-h $1 >tmp
-    ./word-m $1 >tmp2
-    cmp tmp tmp2
+    ./word-h0 $1 >tmp0
+    ./word-h1 $1 >tmp1
+    ./word-m  $1 >tmp2
+    
+    cmp tmp0 tmp1 && cmp tmp0 tmp2
     return $?
 }
 
@@ -33,4 +35,4 @@ else
     echo "failed"
 fi
 
-rm tmp tmp2
+rm tmp[012]
