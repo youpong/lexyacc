@@ -40,8 +40,8 @@ int yylex(void) {
         *p++ = c;
         if ((c = getc(yyin)) == EOF || !isdigit(c)) {
           ungetc(c, yyin);
-          ungetc(c, yyin);
-          *--p = '\0';
+          ungetc(*--p, yyin);
+          *p = '\0';
           return NUMBER;
         }
         *p++ = c;
