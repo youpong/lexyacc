@@ -1,9 +1,10 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "lex.yy.h"
 #include "word.h"
 
+char *yytext;
 /*
  * 0: end
  * NUMBER, COMMENT, TEXT, COMMAND: type
@@ -11,35 +12,53 @@
  */
 int yylex(void) {
   int c;
+  yytext = (char *)malloc(sizeof(char) * 100);
+  char *p = yytext;
 
+  /* ignore white space */
   while ((c = getchar()) == ' ' || c == '\t')
     ;
 
   if (c == EOF)
     return 0;
 
-  /* number
+  /* number(1 of 2)
    * [0-9]+|
-   * [0-9]+\.[0-9]*
+   * [0-9]+\.[0-9]+
    */
   if (isdigit(c)) {
+    *p++ = c;
     while ((c = getchar()) != EOF && isdigit(c))
-      ;
-    if (c == '.')
+      *p++ = c;
+    if (c == '.') {
+      *p++ = c;
+      if((c = getchar()) == EOF || !isdigit(c)) {
+	ungetc(c, stdin);
+	ungetc(c, stdin);
+	*--p = '\0';
+	return NUMBER;
+      }
+      *p++ = c;
       while ((c = getchar()) != EOF && isdigit(c))
-        ;
+	*p++ = c;
+    }
     ungetc(c, stdin);
+    *p = '\0';
     return NUMBER;
   }
 
-  /* number
+  /* number(2 of 2)
    * \.[0-9]+
    */
-  if (c == '.') { /* number */
+  if (c == '.') { 
     int type = c;
-    while ((c = getchar()) != EOF && isdigit(c))
+    *p++ = c;
+    while ((c = getchar()) != EOF && isdigit(c)) {
       type = NUMBER;
+      *p++=c;
+    }
     ungetc(c, stdin);
+    *p = '\0';
     return type;
   }
 

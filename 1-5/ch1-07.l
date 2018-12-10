@@ -13,7 +13,7 @@ int debug = DEBUG;
 %option nounput noinput
 
 %%
-[ \t]+	; /* ignore white space */
+[ \t]+	        ; /* ignore white space */
 
 [0-9]+	        |
 [0-9]+\.[0-9]+	|

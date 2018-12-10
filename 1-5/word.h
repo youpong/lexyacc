@@ -1,4 +1,7 @@
-#define NUMBER 400
-#define COMMENT 401
-#define TEXT 402
-#define COMMAND 403
+typedef enum {
+  NUMBER = 400,
+  COMMENT,
+  TEXT,
+  COMMAND,
+} WORD_TYPE;
+
