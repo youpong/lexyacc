@@ -15,7 +15,7 @@ int yylex(void) {
   yytext = (char *)malloc(sizeof(char) * 100);
   char *p = yytext;
 
-  /* ignore white space */
+  /* [ \t]+ ;ignore white space */
   while ((c = getchar()) == ' ' || c == '\t')
     ;
 
@@ -23,8 +23,8 @@ int yylex(void) {
     return 0;
 
   /* number(1 of 2)
-   * [0-9]+|
-   * [0-9]+\.[0-9]+
+   * [0-9]+         |
+   * [0-9]+\.[0-9]+ |
    */
   if (isdigit(c)) {
     *p++ = c;
@@ -48,7 +48,7 @@ int yylex(void) {
   }
 
   /* number(2 of 2)
-   * \.[0-9]+
+   * \.[0-9]+ reutnr NUMBER;
    */
   if (c == '.') { 
     int type = c;
@@ -62,13 +62,16 @@ int yylex(void) {
     return type;
   }
 
+  /* #.* return COMMENT */
   if (c == '#') { /* comment */
     while ((c = getchar()) != EOF && c != '\n')
       ;
     ungetc(c, stdin);
     return COMMENT;
   }
-  if (c == '"') { /* literal text */
+  /* \"[^"\n]*\" |
+     \"[^"\n]*     return TEXT */
+  if (c == '"') { 
     while ((c = getchar()) != EOF && c != '"' && c != '\n')
       ;
     if (c == '\n')
