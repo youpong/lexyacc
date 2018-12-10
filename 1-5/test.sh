@@ -26,4 +26,11 @@ else
     echo "failed"
 fi
 
+echo -n "Test 3 .."
+if check_equality sample/3.input; then
+    echo "pass"
+else
+    echo "failed"
+fi
+
 rm tmp tmp2
