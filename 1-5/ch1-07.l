@@ -23,11 +23,10 @@ int debug = DEBUG;
 		
 #.*		{ return COMMENT; }
 
-\"[^"\n]*\"     |
-\"[^"\n]*	{ return TEXT; }
+\"[^"\n]*\"     { return TEXT; }
 
 [a-zA-Z][a-zA-Z0-9]* { return COMMAND; }
 
-\n		     { return '\n'; }
-.		     ; /* ignore else */	     
+\n		{ return '\n'; }
+.		; /* ignore else */
 %%
