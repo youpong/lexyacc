@@ -4,7 +4,9 @@
 #include "lex.yy.h"
 #include "word.h"
 
+FILE *yyin;
 char *yytext;
+
 /*
  * 0: end
  * NUMBER, COMMENT, TEXT, COMMAND: type
@@ -12,11 +14,14 @@ char *yytext;
  */
 int yylex(void) {
   int c;
+  char *p;
   yytext = (char *)malloc(sizeof(char) * 100);
-  char *p = yytext;
 
+ start:
+  p = yytext;
+  
   /* [ \t]+ ;ignore white space */
-  while ((c = getchar()) == ' ' || c == '\t')
+  while ((c = getc(yyin)) == ' ' || c == '\t')
     ;
 
   if (c == EOF)
@@ -28,21 +33,21 @@ int yylex(void) {
    */
   if (isdigit(c)) {
     *p++ = c;
-    while ((c = getchar()) != EOF && isdigit(c))
+    while ((c = getc(yyin)) != EOF && isdigit(c))
       *p++ = c;
     if (c == '.') {
       *p++ = c;
-      if((c = getchar()) == EOF || !isdigit(c)) {
-	ungetc(c, stdin);
-	ungetc(c, stdin);
+      if((c = getc(yyin)) == EOF || !isdigit(c)) {
+	ungetc(c, yyin);
+	ungetc(c, yyin);
 	*--p = '\0';
 	return NUMBER;
       }
       *p++ = c;
-      while ((c = getchar()) != EOF && isdigit(c))
+      while ((c = getc(yyin)) != EOF && isdigit(c))
 	*p++ = c;
     }
-    ungetc(c, stdin);
+    ungetc(c, yyin);
     *p = '\0';
     return NUMBER;
   }
@@ -53,36 +58,50 @@ int yylex(void) {
   if (c == '.') { 
     int type = c;
     *p++ = c;
-    while ((c = getchar()) != EOF && isdigit(c)) {
+    while ((c = getc(yyin)) != EOF && isdigit(c)) {
       type = NUMBER;
       *p++=c;
     }
-    ungetc(c, stdin);
+    ungetc(c, yyin);
     *p = '\0';
     return type;
   }
 
   /* #.* return COMMENT */
   if (c == '#') { /* comment */
-    while ((c = getchar()) != EOF && c != '\n')
+    while ((c = getc(yyin)) != EOF && c != '\n')
       ;
-    ungetc(c, stdin);
+    ungetc(c, yyin);
     return COMMENT;
   }
-  /* \"[^"\n]*\" |
-     \"[^"\n]*     return TEXT */
-  if (c == '"') { 
-    while ((c = getchar()) != EOF && c != '"' && c != '\n')
-      ;
-    if (c == '\n')
-      ungetc(c, stdin);
-    return TEXT;
+  
+  /* \"[^"\n]*\" return TEXT */
+  while (c == '"') {
+    *p++ = c;
+    while ((c = getc(yyin)) != EOF && c != '"' && c != '\n')
+      *p++ = c;
+    if(c == '"') {
+      *p++ = c;
+      *p = '\0';
+      return TEXT;
+    }
+
+    /* 
+     * '"' で閉じられていないので、'"'以後読み込んだデータを積み直して
+     * 最初からやり直す 
+     */
+    while(p - yytext > 1 ) {
+      ungetc(*--p, yyin);
+    }
+
+    goto start;
   }
 
-  if (isalpha(c)) { /* check to see if it is a command */
-    while ((c = getchar()) != EOF && isalnum(c))
+  /* check to see if it is a command */  
+  if (isalpha(c)) { 
+    while ((c = getc(yyin)) != EOF && isalnum(c))
       ;
-    ungetc(c, stdin);
+    ungetc(c, yyin);
     return COMMAND;
   }
 
