@@ -28,6 +28,7 @@ int debug = DEBUG;
 [a-zA-Z][a-zA-Z0-9]* { return COMMAND; }
 
 \n		{ return '\n'; }
+
                 /* gleaning */
 .		printf("%d\n", yytext[0]); 
 %%

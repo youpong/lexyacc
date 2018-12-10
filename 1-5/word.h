@@ -4,4 +4,3 @@ typedef enum {
   TEXT,
   COMMAND,
 } WORD_TYPE;
-
