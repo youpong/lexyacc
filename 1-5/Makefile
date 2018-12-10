@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -Wall -DDEBUG=0 -std=c11 -D_POSIX_C_SOURCE=200809L
+CFLAGS = -g -Wall -DDEBUG=0 -std=c11 -D_POSIX_C_SOURCE=200809L
 LIBS = -ll
 
 LEX = lex
