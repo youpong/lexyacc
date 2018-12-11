@@ -3,16 +3,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv[]) {
+int main(int argc, char **argv) {
   int val;
+  int verbose = 0;
+  FILE *file;  
   char *word_type[] = {
       "NUMBER",
       "COMMENT",
       "TEXT",
       "COMMAND",
   };
-  FILE *file;
 
+  if (argc > 1 && strcmp(argv[1], "-v") == 0) {
+    verbose = 1;
+    argc--;
+    argv++;
+  }
+  
   switch (argc) {
   case 1:
     yyin = stdin;
@@ -36,7 +43,7 @@ int main(int argc, char *argv[]) {
     else
       printf("%d", val);
 
-    if (val == NUMBER || val == TEXT) {
+    if (verbose == 1 && (val == NUMBER || val == TEXT)) {
       printf("(%s)", yytext);
     }
     printf("\n");
