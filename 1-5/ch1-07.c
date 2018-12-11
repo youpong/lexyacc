@@ -15,10 +15,6 @@ char *yytext;
  */
 int yylex(void) {
   int c;
-  char *p;
-  yytext = (char *)malloc(sizeof(char) * 100);
-
-  p = yytext;
 
   /* [ \t]+ ;ignore white space */
   while ((c = getc(yyin)) == ' ' || c == '\t')

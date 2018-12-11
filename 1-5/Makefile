@@ -10,7 +10,7 @@ check: word-h0 word-h1 word-m
 clean:
 	- rm -f *.o lex.yy.[ch]  word-h[01] word-m my_lex.c
 
-word-h0:
+word-h0: ch1-07.c
 	cp ch1-07.c my_lex.c
 	make word-h
 	mv word-h word-h0
