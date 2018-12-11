@@ -38,24 +38,25 @@ int yylex(void) {
   }
   if (c == '.') {
     *p++ = c;
-    while ((c = getc(yyin)) != EOF && isdigit(c)) 
+    while ((c = getc(yyin)) != EOF && isdigit(c))
       *p++ = c;
   }
 
-  // . の後が数字でなければ . まで遡って unput
-  if(p > yytext && *(p-1) == '.') {
+  // yytext に１文字以上設定されていれば、 NUMBER
+  // または '.' を返却する
+  if (p > yytext) {
     ungetc(c, yyin);
-    if(strcmp(yytext, ".") == 0)
-      return yytext[0]; 
-    ungetc( *--p, yyin);
+
+    // "." の場合。 '.' を返却
+    if (p - yytext == 1 && yytext[0] == '.')
+      return yytext[0];
+
+    // おしりが '.' で終わる場合、それを unget する
+    if (*(p - 1) == '.')
+      ungetc(*--p, yyin);
+
+    // 終端処理してから return
     *p = '\0';
-    return NUMBER;
-  }
-  
-  // 終端処理と unget してから return  
-  if(p > yytext) {
-    *p = '\0';
-    ungetc(c, yyin);
     return NUMBER;
   }
 
