@@ -15,6 +15,7 @@ char *yytext;
  */
 int yylex(void) {
   int c;
+  yytext = NULL;
 
   /* [ \t]+ ;ignore white space */
   while ((c = getc(yyin)) == ' ' || c == '\t')

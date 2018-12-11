@@ -14,7 +14,7 @@ word-h0: ch1-07.c
 	cp ch1-07.c my_lex.c
 	make word-h
 	mv word-h word-h0
-word-h1:
+word-h1: ch1-07-1.c
 	cp ch1-07-1.c my_lex.c
 	make word-h
 	mv word-h word-h1
