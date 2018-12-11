@@ -35,37 +35,28 @@ int yylex(void) {
     *p++ = c;
     while ((c = getc(yyin)) != EOF && isdigit(c))
       *p++ = c;
-    if (c == '.') {
+  }
+  if (c == '.') {
+    *p++ = c;
+    while ((c = getc(yyin)) != EOF && isdigit(c)) 
       *p++ = c;
-      if ((c = getc(yyin)) != EOF && isdigit(c)) {
-	*p++ = c;
-	while ((c = getc(yyin)) != EOF && isdigit(c))
-	  *p++ = c;
-      } else {
-        ungetc(c, yyin);
-        ungetc(*--p, yyin);
-        *p = '\0';
-        return NUMBER;
-      }
-    }
+  }
+
+  // . の後が数字でなければ . まで遡って unput
+  if(p > yytext && *(p-1) == '.') {
     ungetc(c, yyin);
+    if(strcmp(yytext, ".") == 0)
+      return yytext[0]; 
+    ungetc( *--p, yyin);
     *p = '\0';
     return NUMBER;
   }
-
-  /* number(2 of 2)
-   * \.[0-9]+ reutnr NUMBER;
-   */
-  if (c == '.') {
-    int type = c;
-    *p++ = c;
-    while ((c = getc(yyin)) != EOF && isdigit(c)) {
-      type = NUMBER;
-      *p++ = c;
-    }
-    ungetc(c, yyin);
+  
+  // 終端処理と unget してから return  
+  if(p > yytext) {
     *p = '\0';
-    return type;
+    ungetc(c, yyin);
+    return NUMBER;
   }
 
   /* #.* return COMMENT */
