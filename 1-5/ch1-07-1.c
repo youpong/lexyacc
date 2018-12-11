@@ -27,9 +27,10 @@ int yylex(void) {
   if (c == EOF)
     return 0;
 
-  /* number(1 of 2)
+  /* number
    * [0-9]+         |
    * [0-9]+\.[0-9]+ |
+   *       \.[0-9]+  return NUMBER
    */
   if (isdigit(c)) {
     *p++ = c;
