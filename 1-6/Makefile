@@ -8,12 +8,12 @@ YACC = yacc
 TARGET = word
 OBJS = y.tab.o lex.yy.o main.o lib.o
 
-all: word0 
+all: word0 word1 word2
 clean:
-	- rm -f y.tab.[ch] lex.yy.[ch] parse.y lex.l $(OBJS) word0 word1
+	- rm -f y.tab.[ch] lex.yy.[ch] parse.y lex.l $(OBJS) word[012]
 
 # 1.6.1
-word0:
+word0: 
 	cp ch1-08.l lex.l
 	cp ch1-08.y parse.y
 	make word
@@ -24,6 +24,12 @@ word1:
 	cp ch1-09.y parse.y
 	make word
 	mv word word1
+# 1.6.3
+word2: ch1-10.y ch1-10.l
+	cp ch1-10.l lex.l
+	cp ch1-10.y parse.y
+	make word
+	mv word word2
 
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LIBS)
