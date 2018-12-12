@@ -52,7 +52,7 @@ int yylex(void) {
     if (p - yytext == 1 && yytext[0] == '.')
       return yytext[0];
 
-    // おしりが '.' で終わる場合、それを unget する
+    // 数字に続いておしりが '.' で終わる場合、それを unget する
     if (*(p - 1) == '.')
       ungetc(*--p, yyin);
 
