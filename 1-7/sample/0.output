@@ -1,9 +1,10 @@
-// c++ style: is comment
-/* c style */: is comment
-/** c style 2 **/: is comment
-/* 1 */: is comment
-/* 2 */: is comment
-/* /* 3 */: is comment
+// c++ style
+/* c style */
+/** c style 2  **/
+/* 1 */
+/* 2 */
+/* /* 3 */
 /*
- * multi-line
- */: is comment
+ * multi-line 
+ */
+comments: 9
