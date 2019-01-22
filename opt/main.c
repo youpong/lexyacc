@@ -1,11 +1,9 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "main.h"
 #include "y.tab.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-int
-main(int argc, char* argv[])
-{
+int main(int argc, char *argv[]) {
   yyparse();
   return EXIT_SUCCESS;
 }

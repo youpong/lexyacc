@@ -1,25 +1,19 @@
-#include <stdlib.h>
-#include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
+#include <CUnit/CUnit.h>
+#include <stdlib.h>
 
 #include "main.h"
 #include "test.h"
 
-int
-test_setup(void)
-{
+int test_setup(void) {
   return 0;
 }
 
-int
-test_teardown(void)
-{
+int test_teardown(void) {
   return 0;
 }
 
-int
-main(int argc, char* argv[])
-{
+int main(int argc, char *argv[]) {
   CU_pSuite suite;
   int failures;
 
@@ -31,5 +25,5 @@ main(int argc, char* argv[])
   failures = CU_get_number_of_failures();
   CU_cleanup_registry(); /* 後始末 */
 
-  return failures==0?EXIT_SUCCESS:EXIT_FAILURE;
+  return failures == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }
