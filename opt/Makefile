@@ -15,7 +15,8 @@ check: $(TEST_TARGET)
 clean:
 	- rm -f $(TARGET) $(OBJS) $(TEST_TARGET) $(TEST_OBJS) \
                 y.tab.[ch] lex.yy.[ch] a.out
-
+format:
+	clang-format -i *.[ch]
 $(TARGET): $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LIBS)
 $(TEST_TARGET): $(TEST_OBJS)

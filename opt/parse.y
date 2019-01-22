@@ -10,7 +10,7 @@ func_def:   IDENT '(' params_opt ')'
 params_opt: /* epsilon */ { printf("params omitted\n"); }
             | params      { printf("params specified\n"); }
 	    ;
-params:     param ',' params
+params:     params ',' param
             | param
             ;
 param:      IDENT { printf("param: (%s)\n", yytext); }
